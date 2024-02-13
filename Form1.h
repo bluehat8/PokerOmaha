@@ -1,4 +1,9 @@
 #pragma once
+#include "PokerOmahaForm .h"
+#include "PokerOmahaForm .h"
+#include "MesaPoker.h"
+using namespace PokerOmaha;
+
 
 namespace CppCLRWinFormsProject {
 
@@ -18,6 +23,8 @@ namespace CppCLRWinFormsProject {
 		Form1(void)
 		{
 			InitializeComponent();
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
+
 			//
 			//TODO: Add the constructor code here
 			//
@@ -86,7 +93,7 @@ namespace CppCLRWinFormsProject {
 			// panel1
 			// 
 			System::Drawing::Bitmap^ imagen = gcnew System::Drawing::Bitmap("testfondo.bmp", true);
-			this->panel1->BackgroundImage = imagen;			
+			this->panel1->BackgroundImage = imagen;
 			this->panel1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->panel1->Dock = System::Windows::Forms::DockStyle::Right;
 			this->panel1->ForeColor = System::Drawing::Color::Crimson;
@@ -106,13 +113,14 @@ namespace CppCLRWinFormsProject {
 			System::Drawing::Bitmap^ addImage = gcnew System::Drawing::Bitmap("add-20.png", true);
 
 			this->button2->Image = addImage;
-			this->button2->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;			
+			this->button2->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
 			this->button2->Location = System::Drawing::Point(42, 343);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(367, 39);
 			this->button2->TabIndex = 3;
 			this->button2->Text = L"Iniciar";
 			this->button2->UseVisualStyleBackColor = false;
+			this->button2->Click += gcnew System::EventHandler(this, &Form1::btnIniciar2);
 			// 
 			// txtYourName
 			// 
@@ -229,6 +237,64 @@ namespace CppCLRWinFormsProject {
 		}
 #pragma endregion
 	private: System::Void Form1_Load(System::Object^ sender, System::EventArgs^ e) {
+		player2->Click += gcnew System::EventHandler(this, &Form1::btnJugadores_Click);
+		player3->Click += gcnew System::EventHandler(this, &Form1::btnJugadores_Click);
+		player4->Click += gcnew System::EventHandler(this, &Form1::btnJugadores_Click);
+		player5->Click += gcnew System::EventHandler(this, &Form1::btnJugadores_Click);
+		player6->Click += gcnew System::EventHandler(this, &Form1::btnJugadores_Click);
 	}
+
+
+	private: System::Void btnJugadores_Click(System::Object^ sender, System::EventArgs^ e) {
+		System::Windows::Forms::Button^ button = dynamic_cast<System::Windows::Forms::Button^>(sender);
+
+		if (button != nullptr) {
+			// Restaurar el color de los botones
+			player2->BackColor = System::Drawing::SystemColors::Control;
+			player3->BackColor = System::Drawing::SystemColors::Control;
+			player4->BackColor = System::Drawing::SystemColors::Control;
+			player5->BackColor = System::Drawing::SystemColors::Control;
+			player6->BackColor = System::Drawing::SystemColors::Control;
+
+			button->BackColor = System::Drawing::Color::Green;
+
+			// Actualizar la variable players con el número de jugadores del botón seleccionado
+			if (button == player2) {
+				players = 2;
+			}
+			else if (button == player3) {
+				players = 3;
+			}
+			else if (button == player4) {
+				players = 4;
+			}
+			else if (button == player5) {
+				players = 5;
+			}
+			else if (button == player6) {
+				players = 6;
+			}
+		}
+	}
+
+	private:
+		static int players = 0;
+
+	private: System::Void btnIniciar2(System::Object^ sender, System::EventArgs^ e) {
+
+		if(txtYourName->Text->Length ==0){
+			System::Windows::Forms::MessageBox::Show("Por favor, ingresa el nombre de jugador.", "Nombre del jugador", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			return;
+		}
+
+		if(players == 0){
+			System::Windows::Forms::MessageBox::Show("Por favor, selecciona el número de jugadores antes de iniciar el juego.", "Número de Jugadores", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			return;
+		}
+	
+		MesaPoker^ mainForm = gcnew MesaPoker(players);
+		mainForm->ShowDialog();
+	}
+
 };
 }
