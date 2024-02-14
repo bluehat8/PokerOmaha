@@ -559,11 +559,11 @@ namespace PokerOmaha {
 			this->p1_carta2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 
 			System::Drawing::Bitmap^ titleImage3 = gcnew System::Drawing::Bitmap(rutaCarta3, true);
-			this->p1_carta3->BackgroundImage = titleImage2;
+			this->p1_carta3->BackgroundImage = titleImage3;
 			this->p1_carta3->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 
 			System::Drawing::Bitmap^ titleImage4 = gcnew System::Drawing::Bitmap(rutaCarta4, true);
-			this->p1_carta4->BackgroundImage = titleImage2;
+			this->p1_carta4->BackgroundImage = titleImage4;
 			this->p1_carta4->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 		}
 #pragma endregion
